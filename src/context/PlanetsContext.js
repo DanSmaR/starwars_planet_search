@@ -29,4 +29,4 @@ PlanetsProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default PlanetsProvider;
+export default PlanetsContext;
