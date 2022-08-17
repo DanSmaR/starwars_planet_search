@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { formatTitle } from '../../utils/helperFunctions';
 
 function Table({ planets }) {
+  console.log(planets);
   return (
     <div>
       <table>
@@ -13,6 +14,19 @@ function Table({ planets }) {
             )) }
           </tr>
         </thead>
+        <tbody>
+          {
+            planets.map((planet) => (
+              <tr key={ planet.created }>
+                {
+                  Object.keys(planet).map((itemKey, index) => (
+                    <td key={ index }>{planet[itemKey]}</td>
+                  ))
+                }
+              </tr>
+            ))
+          }
+        </tbody>
       </table>
     </div>
   );
