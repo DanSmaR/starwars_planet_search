@@ -25,9 +25,14 @@ export const PlanetsProvider = ({ children }) => {
 
   return (
     <PlanetsContext.Provider
-      value={ {
-        planets, isLoading, error, filters, setName, searchResults, setFilterValues,
-      } }
+      value={ { planets,
+        isLoading,
+        error,
+        filters,
+        setName,
+        searchResults,
+        filterValues,
+        setFilterValues } }
     >
       { children }
     </PlanetsContext.Provider>
