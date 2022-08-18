@@ -12,3 +12,24 @@ export function extractKeyFromEachObjInArray(ArrOfObj, key) {
     };
   }, {}));
 }
+
+function getComparison(value1, value2, operator) {
+  const valueNum1 = parseInt(value1, 10);
+  const valueNum2 = parseInt(value2, 10);
+  switch (operator) {
+  case 'maior que':
+    return valueNum1 > valueNum2;
+  case 'menor que':
+    return valueNum1 < valueNum2;
+  case 'igual a':
+    return valueNum1 === valueNum2;
+  default:
+    return true;
+  }
+}
+
+export function filterResults(obj, filterArr) {
+  if (!filterArr.length) return true;
+  const { column, comparison, value } = filterArr[0];
+  return getComparison(obj[column], value, comparison);
+}

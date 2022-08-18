@@ -15,17 +15,13 @@ function Table({ planets }) {
           </tr>
         </thead>
         <tbody>
-          {
-            planets.map((planet) => (
-              <tr key={ planet.created }>
-                {
-                  Object.keys(planet).map((itemKey, index) => (
-                    <td key={ index }>{planet[itemKey]}</td>
-                  ))
-                }
-              </tr>
-            ))
-          }
+          { planets.map((planet) => (
+            <tr key={ planet.created }>
+              { Object.keys(planet).map((itemKey, index) => (
+                <td key={ index }>{planet[itemKey]}</td>
+              )) }
+            </tr>
+          )) }
         </tbody>
       </table>
     </div>

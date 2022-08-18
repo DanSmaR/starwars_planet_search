@@ -5,7 +5,7 @@ function SearchBar() {
   const { filters, setName } = useContext(PlanetsContext);
   const { filterByName: { name } } = filters;
   return (
-    <div>
+    <header>
       <h1>Projeto Star Wars Trybe</h1>
       <form onSubmit={ (e) => e.preventDefault() }>
         <p>
@@ -24,7 +24,7 @@ function SearchBar() {
           </label>
         </p>
       </form>
-    </div>
+    </header>
   );
 }
 
