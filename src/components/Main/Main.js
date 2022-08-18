@@ -5,17 +5,16 @@ import Filter from '../Filter/Filter';
 import Table from '../Table/Table';
 
 function Main() {
-  const { planets, isLoading, error } = useContext(PlanetsContext);
+  const { searchResults, isLoading, error } = useContext(PlanetsContext);
   return (
     <div>
       <SearchBar />
       <Filter />
       { isLoading && <p>Loading Planets...</p> }
       { !isLoading && error && <p>{ error }</p> }
-      {
-        !isLoading && !error && (planets.length ? <Table planets={ planets } /> : (
-          <p>No Planets to Display</p>))
-      }
+      { !isLoading && !error && (searchResults.length
+        ? <Table planets={ searchResults } />
+        : <p>No Planets to Display</p>) }
     </div>
   );
 }
