@@ -8,11 +8,13 @@ function Filter() {
   const [comparison, setComparison] = useState(comparisonOperators[0]);
   const [valueNum, setValueNum] = useState(0);
   const formElem = useRef(null);
+  const MAX_LENGTH = columnsFilter.length;
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (filterValues.length >= MAX_LENGTH) return;
     setFilterValues((prevFilterValues) => ([
-      { column, comparison, value: valueNum }, ...prevFilterValues,
+      ...prevFilterValues, { column, comparison, value: valueNum },
     ]));
   }
 
@@ -21,6 +23,16 @@ function Filter() {
     setComparison(formElem.current.operator.value);
     setValueNum(formElem.current.valueNum.value);
   }, [filterValues]);
+
+  function handleRemoveFilter(filter) {
+    if (!filterValues.length) return;
+    if (filter === undefined) {
+      setFilterValues([]);
+      return;
+    }
+    setFilterValues((prevFilterValues) => prevFilterValues
+      .filter((item) => item.column !== filter.column));
+  }
 
   return (
     <section>
@@ -84,13 +96,29 @@ function Filter() {
         <p>
           <button type="submit" data-testid="button-filter">Filtrar</button>
         </p>
-        { filterValues.length !== 0 && filterValues.map((filterObj) => (
-          <p key={ filterObj.column }>
-            <button type="button">
-              {`X ${filterObj.column} ${filterObj.comparison} ${filterObj.value}`}
-            </button>
-          </p>
-        ))}
+        <p>
+          <button
+            type="button"
+            onClick={ () => handleRemoveFilter() }
+            data-testid="button-remove-filters"
+          >
+            REMOVER FILTROS
+          </button>
+        </p>
+        <ul>
+          { filterValues.length !== 0 && filterValues.map((filterObj) => (
+            <li key={ filterObj.column } data-testid="filter">
+              { `${filterObj.column} ${filterObj.comparison} ${filterObj.value}` }
+              { ' ' }
+              <button
+                type="button"
+                onClick={ () => handleRemoveFilter(filterObj) }
+              >
+                X
+              </button>
+            </li>
+          ))}
+        </ul>
       </form>
     </section>
   );
