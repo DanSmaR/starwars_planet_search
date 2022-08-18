@@ -84,6 +84,13 @@ function Filter() {
         <p>
           <button type="submit" data-testid="button-filter">Filtrar</button>
         </p>
+        { filterValues.length !== 0 && filterValues.map((filterObj) => (
+          <p key={ filterObj.column }>
+            <button type="button">
+              {`X ${filterObj.column} ${filterObj.comparison} ${filterObj.value}`}
+            </button>
+          </p>
+        ))}
       </form>
     </section>
   );
