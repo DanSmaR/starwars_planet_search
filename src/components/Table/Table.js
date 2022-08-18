@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { formatTitle } from '../../utils/helperFunctions';
 
 function Table({ planets }) {
-  console.log(planets);
   return (
     <div>
       <table>

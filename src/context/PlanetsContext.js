@@ -13,12 +13,12 @@ export const PlanetsProvider = ({ children }) => {
   const [filterValues, setFilterValues] = useState([]);
   const filters = { filterByName: { name }, filterValues };
   const { results, isLoading, error } = useFetch(URL);
-
+  console.log(filterValues);
   useEffect(() => setPlanets(results), [results]);
 
   useEffect(() => {
-    const filteredResults = planets.filter((planet) => (planet.name.toLowerCase())
-      .includes(name.toLowerCase()))
+    const filteredResults = (filterValues.length ? searchResults : planets)
+      .filter((planet) => (planet.name.toLowerCase()).includes(name.toLowerCase()))
       .filter((planet) => filterResults(planet, filterValues));
     setSearchResults(filteredResults);
   }, [planets, name, filterValues]);

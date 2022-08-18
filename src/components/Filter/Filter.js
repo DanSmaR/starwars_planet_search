@@ -10,7 +10,10 @@ function Filter() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setFilterValues([{ column, comparison, value: valueNum }]);
+    setFilterValues((prevFilterValues) => ([
+      { column, comparison, value: valueNum }, ...prevFilterValues,
+    ]));
+    // [{ column, comparison, value: valueNum }]
   }
 
   return (
