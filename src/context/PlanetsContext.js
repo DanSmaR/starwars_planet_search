@@ -17,8 +17,8 @@ export const PlanetsProvider = ({ children }) => {
   useEffect(() => setPlanets(results), [results]);
 
   useEffect(() => {
-    const filteredResults = (filterValues.length ? searchResults : planets)
-      .filter((planet) => (planet.name.toLowerCase()).includes(name.toLowerCase()))
+    const filteredResults = planets.filter((planet) => (planet.name.toLowerCase())
+      .includes(name.toLowerCase()))
       .filter((planet) => filterResults(planet, filterValues));
     setSearchResults(filteredResults);
   }, [planets, name, filterValues]);

@@ -30,6 +30,8 @@ function getComparison(value1, value2, operator) {
 
 export function filterResults(obj, filterArr) {
   if (!filterArr.length) return true;
-  const { column, comparison, value } = filterArr[0];
-  return getComparison(obj[column], value, comparison);
+  return filterArr.every((filterObj) => {
+    const { column, comparison, value } = filterObj;
+    return getComparison(obj[column], value, comparison);
+  });
 }
