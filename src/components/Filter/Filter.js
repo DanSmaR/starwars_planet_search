@@ -3,10 +3,11 @@ import PlanetsContext from '../../context/PlanetsContext';
 import { columnsFilter, comparisonOperators } from '../../utils/constants';
 
 function Filter() {
-  const { filterValues, setFilterValues } = useContext(PlanetsContext);
+  const { filterValues, setFilterValues, setOrder } = useContext(PlanetsContext);
   const [column, setColumn] = useState(columnsFilter[0]);
   const [comparison, setComparison] = useState(comparisonOperators[0]);
   const [valueNum, setValueNum] = useState(0);
+  const [columnSort, setColumnSort] = useState(columnsFilter[0]);
   const formElem = useRef(null);
   const MAX_LENGTH = columnsFilter.length;
 
@@ -36,6 +37,19 @@ function Filter() {
       .filter((item) => item.column !== filter.column));
   }
 
+  function handleOrderFilter() {
+    console.log(formElem.current.sort.value);
+    setOrder({ column: columnSort, sort: formElem.current.sort.value });
+  }
+
+  function renderOptions(columnName) {
+    return (
+      <option key={ columnName } value={ columnName }>
+        { columnName }
+      </option>
+    );
+  }
+
   return (
     <section>
       <form onSubmit={ handleSubmit } ref={ formElem }>
@@ -55,11 +69,7 @@ function Filter() {
                   if (!filterValues.length) return true;
                   return filterValues.every((item) => item.column !== columnName);
                 })
-                .map((columnName, index) => (
-                  <option key={ index } value={ columnName }>
-                    { columnName }
-                  </option>
-                ))}
+                .map((columnName) => renderOptions(columnName))}
             </select>
           </label>
         </p>
@@ -97,6 +107,58 @@ function Filter() {
         </p>
         <p>
           <button type="submit" data-testid="button-filter">Filtrar</button>
+        </p>
+        <p>
+          <label htmlFor="column-sort">
+            Ordenar
+            { ' ' }
+            <select
+              name="columnSort"
+              id="column-sort"
+              data-testid="column-sort"
+              value={ columnSort }
+              onChange={ ({ target }) => setColumnSort(target.value) }
+            >
+              { columnsFilter
+                .map((columnName) => renderOptions(columnName))}
+            </select>
+          </label>
+        </p>
+        <p>
+          <label htmlFor="sort-input-asc">
+            <input
+              type="radio"
+              name="sort"
+              id="sort-input-asc"
+              value="ASC"
+              defaultChecked
+              data-testid="column-sort-input-asc"
+            />
+            { ' ' }
+            Ascendente
+          </label>
+        </p>
+        <p>
+          <label htmlFor="sort-input-desc">
+            <input
+              type="radio"
+              name="sort"
+              id="sort-input-desc"
+              value="DESC"
+              data-testid="column-sort-input-desc"
+            />
+            { ' ' }
+            Descendente
+          </label>
+        </p>
+        <p>
+          <button
+            type="button"
+            onClick={ handleOrderFilter }
+            data-testid="column-sort-button"
+          >
+            Ordenar
+          </button>
         </p>
         <p>
           <button

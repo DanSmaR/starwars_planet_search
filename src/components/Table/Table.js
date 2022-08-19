@@ -22,9 +22,14 @@ function Table() {
             <tbody>
               { searchResults.map((planet) => (
                 <tr key={ planet.created }>
-                  { Object.keys(planet).map((itemKey, index) => (
-                    <td key={ index }>{planet[itemKey]}</td>
-                  )) }
+                  { Object.keys(planet).map((itemKey, index) => {
+                    if (index === 0) {
+                      return (
+                        <td key={ index } data-testid="planet-name">{planet[itemKey]}</td>
+                      );
+                    }
+                    return (<td key={ index }>{planet[itemKey]}</td>);
+                  }) }
                 </tr>
               )) }
             </tbody>
