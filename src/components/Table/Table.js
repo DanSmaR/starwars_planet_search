@@ -25,7 +25,7 @@ function Table() {
                   { Object.keys(planet).map((itemKey, index) => {
                     if (index === 0) {
                       return (
-                        <td key={ index } data-testid="planet">{planet[itemKey]}</td>
+                        <td key={ index } data-testid="planet-name">{planet[itemKey]}</td>
                       );
                     }
                     return (<td key={ index }>{planet[itemKey]}</td>);

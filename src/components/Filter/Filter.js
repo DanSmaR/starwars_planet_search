@@ -3,10 +3,11 @@ import PlanetsContext from '../../context/PlanetsContext';
 import { columnsFilter, comparisonOperators } from '../../utils/constants';
 
 function Filter() {
-  const { filterValues, setFilterValues } = useContext(PlanetsContext);
+  const { filterValues, setFilterValues, setOrder } = useContext(PlanetsContext);
   const [column, setColumn] = useState(columnsFilter[0]);
   const [comparison, setComparison] = useState(comparisonOperators[0]);
   const [valueNum, setValueNum] = useState(0);
+  const [columnSort, setColumnSort] = useState(columnsFilter[0]);
   const formElem = useRef(null);
   const MAX_LENGTH = columnsFilter.length;
 
@@ -34,6 +35,11 @@ function Filter() {
     }
     setFilterValues((prevFilterValues) => prevFilterValues
       .filter((item) => item.column !== filter.column));
+  }
+
+  function handleOrderFilter() {
+    console.log(formElem.current.sort.value);
+    setOrder({ column: columnSort, sort: formElem.current.sort.value });
   }
 
   function renderOptions(columnName) {
@@ -110,8 +116,8 @@ function Filter() {
               name="columnSort"
               id="column-sort"
               data-testid="column-sort"
-              // value={  }
-              onChange={ () => {} }
+              value={ columnSort }
+              onChange={ ({ target }) => setColumnSort(target.value) }
             >
               { columnsFilter
                 .map((columnName) => renderOptions(columnName))}
@@ -125,6 +131,7 @@ function Filter() {
               name="sort"
               id="sort-input-asc"
               value="ASC"
+              defaultChecked
               data-testid="column-sort-input-asc"
             />
             { ' ' }
@@ -147,7 +154,7 @@ function Filter() {
         <p>
           <button
             type="button"
-            onClick={ () => {} }
+            onClick={ handleOrderFilter }
             data-testid="column-sort-button"
           >
             Ordenar

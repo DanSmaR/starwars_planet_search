@@ -1,3 +1,5 @@
+const NEGATIVE_NUM = 1;
+
 export function formatTitle(str) {
   const splitedStr = str.split('_');
   const newArr = splitedStr.map((string) => string[0].toUpperCase() + string.slice(1));
@@ -34,4 +36,22 @@ export function filterResults(obj, filterArr) {
     const { column, comparison, value } = filterObj;
     return getComparison(obj[column], value, comparison);
   });
+}
+
+export function orderResults(arr, sortObj) {
+  console.log(sortObj);
+  const nums = arr
+    .filter((item) => {
+      console.log(item[sortObj.column]);
+      console.log(Number.isFinite(parseInt(item[sortObj.column], 10)));
+      return Number.isFinite(parseInt(item[sortObj.column], 10));
+    })
+    .sort((a, b) => {
+      if (sortObj.sort === 'ASC') {
+        return parseInt(a[sortObj.column], 10) - parseInt(b[sortObj.column], 10);
+      } return parseInt(b[sortObj.column], 10) - parseInt(a[sortObj.column], 10);
+    });
+  const str = arr.filter((item) => !Number.isFinite(parseInt(item[sortObj.column], 10)));
+  console.log({ nums, str });
+  return [...nums, ...str];
 }
