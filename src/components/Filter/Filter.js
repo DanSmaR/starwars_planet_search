@@ -36,6 +36,14 @@ function Filter() {
       .filter((item) => item.column !== filter.column));
   }
 
+  function renderOptions(columnName) {
+    return (
+      <option key={ columnName } value={ columnName }>
+        { columnName }
+      </option>
+    );
+  }
+
   return (
     <section>
       <form onSubmit={ handleSubmit } ref={ formElem }>
@@ -55,11 +63,7 @@ function Filter() {
                   if (!filterValues.length) return true;
                   return filterValues.every((item) => item.column !== columnName);
                 })
-                .map((columnName, index) => (
-                  <option key={ index } value={ columnName }>
-                    { columnName }
-                  </option>
-                ))}
+                .map((columnName) => renderOptions(columnName))}
             </select>
           </label>
         </p>
@@ -97,6 +101,57 @@ function Filter() {
         </p>
         <p>
           <button type="submit" data-testid="button-filter">Filtrar</button>
+        </p>
+        <p>
+          <label htmlFor="column-sort">
+            Ordenar
+            { ' ' }
+            <select
+              name="columnSort"
+              id="column-sort"
+              data-testid="column-sort"
+              // value={  }
+              onChange={ () => {} }
+            >
+              { columnsFilter
+                .map((columnName) => renderOptions(columnName))}
+            </select>
+          </label>
+        </p>
+        <p>
+          <label htmlFor="sort-input-asc">
+            <input
+              type="radio"
+              name="sort"
+              id="sort-input-asc"
+              value="ASC"
+              data-testid="column-sort-input-asc"
+            />
+            { ' ' }
+            Ascendente
+          </label>
+        </p>
+        <p>
+          <label htmlFor="sort-input-desc">
+            <input
+              type="radio"
+              name="sort"
+              id="sort-input-desc"
+              value="DESC"
+              data-testid="column-sort-input-desc"
+            />
+            { ' ' }
+            Descendente
+          </label>
+        </p>
+        <p>
+          <button
+            type="button"
+            onClick={ () => {} }
+            data-testid="column-sort-button"
+          >
+            Ordenar
+          </button>
         </p>
         <p>
           <button
