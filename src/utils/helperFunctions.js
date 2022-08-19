@@ -1,5 +1,3 @@
-const NEGATIVE_NUM = 1;
-
 export function formatTitle(str) {
   const splitedStr = str.split('_');
   const newArr = splitedStr.map((string) => string[0].toUpperCase() + string.slice(1));
