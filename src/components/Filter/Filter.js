@@ -18,11 +18,13 @@ function Filter() {
     ]));
   }
 
-  // useEffect(() => {
-  //   setColumn(formElem.current.column.value);
-  //   setComparison(formElem.current.operator.value);
-  //   setValueNum(formElem.current.valueNum.value);
-  // }, [filterValues]);
+  useEffect(() => {
+    if (filterValues.length) {
+      setColumn(formElem.current.column.value);
+      setComparison(formElem.current.operator.value);
+      setValueNum(formElem.current.valueNum.value);
+    }
+  }, [filterValues]);
 
   function handleRemoveFilter(filter) {
     if (!filterValues.length) return;

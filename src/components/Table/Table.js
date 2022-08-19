@@ -1,17 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
-import { filterResults, formatTitle } from '../../utils/helperFunctions';
+import { formatTitle } from '../../utils/helperFunctions';
 
 function Table() {
-  const { searchResults, isLoading, error, results, name, filterValues, setSearchResults,
-  } = useContext(PlanetsContext);
-
-  useEffect(() => {
-    const filteredResults = results.filter((planet) => (planet.name.toLowerCase())
-      .includes(name.toLowerCase()))
-      .filter((planet) => filterResults(planet, filterValues));
-    setSearchResults(filteredResults);
-  }, [results, name, filterValues]);
+  const { searchResults, isLoading, error } = useContext(PlanetsContext);
 
   return (
     <div>
