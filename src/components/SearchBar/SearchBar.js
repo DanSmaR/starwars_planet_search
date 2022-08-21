@@ -7,7 +7,7 @@ function SearchBar() {
   return (
     <header>
       <h1>Projeto Star Wars Trybe</h1>
-      <form onSubmit={ (e) => e.preventDefault() }>
+      <form>
         <p>
           <label htmlFor="search-name">
             Search Planets

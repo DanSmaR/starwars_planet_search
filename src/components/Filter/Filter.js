@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 import { columnsFilter, comparisonOperators } from '../../utils/constants';
 
@@ -8,7 +8,7 @@ function Filter() {
   const [comparison, setComparison] = useState(comparisonOperators[0]);
   const [valueNum, setValueNum] = useState(0);
   const [columnSort, setColumnSort] = useState(columnsFilter[0]);
-  const formElem = useRef(null);
+  const [sort, setSort] = useState('ASC');
   const MAX_LENGTH = columnsFilter.length;
 
   function handleSubmit(e) {
@@ -20,11 +20,16 @@ function Filter() {
   }
 
   useEffect(() => {
-    if (filterValues.length) {
-      setColumn(formElem.current.column.value);
-      setComparison(formElem.current.operator.value);
-      setValueNum(formElem.current.valueNum.value);
+    function setFormInputValues() {
+      const newColumnFilter = columnsFilter
+        .filter((columnName) => filterValues
+          .every((item) => item.column !== columnName));
+      if (newColumnFilter.length === 0) return;
+      setColumn(newColumnFilter[0]);
+      setComparison(comparisonOperators[0]);
+      setValueNum(0);
     }
+    setFormInputValues();
   }, [filterValues]);
 
   function handleRemoveFilter(filter) {
@@ -38,8 +43,7 @@ function Filter() {
   }
 
   function handleOrderFilter() {
-    console.log(formElem.current.sort.value);
-    setOrder({ column: columnSort, sort: formElem.current.sort.value });
+    setOrder({ column: columnSort, sort });
   }
 
   function renderOptions(columnName) {
@@ -52,7 +56,7 @@ function Filter() {
 
   return (
     <section>
-      <form onSubmit={ handleSubmit } ref={ formElem }>
+      <form onSubmit={ handleSubmit }>
         <p>
           <label htmlFor="column-filter">
             Column
@@ -99,6 +103,7 @@ function Filter() {
             <input
               name="valueNum"
               type="number"
+              id="value-filter"
               data-testid="value-filter"
               value={ valueNum }
               onChange={ ({ target }) => setValueNum(target.value) }
@@ -131,7 +136,8 @@ function Filter() {
               name="sort"
               id="sort-input-asc"
               value="ASC"
-              defaultChecked
+              checked={ sort === 'ASC' }
+              onChange={ ({ target }) => setSort(target.value) }
               data-testid="column-sort-input-asc"
             />
             { ' ' }
@@ -145,6 +151,8 @@ function Filter() {
               name="sort"
               id="sort-input-desc"
               value="DESC"
+              checked={ sort === 'DESC' }
+              onChange={ ({ target }) => setSort(target.value) }
               data-testid="column-sort-input-desc"
             />
             { ' ' }
