@@ -2,6 +2,10 @@ const planetsName = [
   'Yavin IV', 'Tatooine', 'Bespin', 'Endor', 'Kamino', 'Alderaan', 'Naboo', 'Coruscant', 'Hoth', 'Dagobah'
 ];
 
+export const descendingPlanetsName = [
+  'Coruscant', 'Naboo', 'Alderaan', 'Kamino', 'Endor', 'Bespin', 'Tatooine', 'Yavin IV', 'Hoth', 'Dagobah'
+];
+
 export const filterValues = [
   {
     column: "population",

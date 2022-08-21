@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import App from '../components/App/App';
 import { mockData } from '../utils/constants';
 import userEvent from '@testing-library/user-event';
-import planetsName, { filterValues } from './utils/constants';
+import planetsName, { descendingPlanetsName, filterValues } from './utils/constants';
 import { filterResults } from '../utils/helperFunctions';
 
 const planetOne = 'Endor';
@@ -25,8 +25,8 @@ function fillInFilterFormInputs({ column, comparison, value }) {
   userEvent.selectOptions(getSelectInput(/comparison operator/i), [comparison]);
   userEvent.type(getNumberInputValue(), value);
 }
-function fillInOrderFormInputs(radioInputName, columnName) {
-  userEvent.selectOptions(getSelectInput(/ordenar/i), [columnName]);
+function fillInOrderFormInputs(radioInputName, { column }) {
+  userEvent.selectOptions(getSelectInput(/ordenar/i), [column]);
   userEvent.click(getRadioBtn(radioInputName));
 }
 
@@ -128,6 +128,27 @@ describe('Testing the Star Wars Planets Search page', () => {
       filterValues.forEach(({ column }) => {
         expect(querySelectInput(column)).toBeNull();
       });
+    });
+  });
+
+  describe('Testing the ordering filter', () => {
+    it('should order the planets in ascending order based on the values of the column selected when "Ascendente" radio button is selected and "Filtrar" button is clicked', () => {
+      fillInOrderFormInputs(/ascendente/i, filterValues[0]);
+      userEvent.click(getButton(/ordenar/i));
+      const listedPlanets = screen.getAllByTestId('planet-name');
+      listedPlanets.forEach((planet, index) => {
+        expect(planet).toHaveTextContent(planetsName[index]);
+      })
+    });
+
+    it('should order the planets in ascending order based on the values of the column selected when "Ascendente" radio button is selected and "Filtrar" button is clicked', () => {
+      fillInOrderFormInputs(/descendente/i, filterValues[0]);
+      userEvent.click(getButton(/ordenar/i));
+      const listedPlanets = screen.getAllByTestId('planet-name');
+      listedPlanets.forEach((planet, index) => {
+        expect(planet).toHaveTextContent(descendingPlanetsName[index]);
+      })
+      screen.logTestingPlaygroundURL();
     });
   });
 });
