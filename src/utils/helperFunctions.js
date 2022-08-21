@@ -21,10 +21,8 @@ function getComparison(value1, value2, operator) {
     return valueNum1 > valueNum2;
   case 'menor que':
     return valueNum1 < valueNum2;
-  case 'igual a':
-    return valueNum1 === valueNum2;
   default:
-    return true;
+    return valueNum1 === valueNum2;
   }
 }
 

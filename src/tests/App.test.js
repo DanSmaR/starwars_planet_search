@@ -18,6 +18,7 @@ const getSelectInput = (name) => screen.getByRole('combobox', { name: name });
 const querySelectInput = (name) => screen.queryByRole('combobox', { name: name });
 const getSelectedOption = (value) => screen.getByRole('option', { name: value }).selected;
 const getRadioBtn = (name) => screen.getByRole('radio', { name: name });
+const getSearchInput = () => screen.getByRole('textbox', { name: /search planets/i });
 
 function fillInFilterFormInputs({ column, comparison, value }) {
   userEvent.clear(getNumberInputValue());
@@ -26,6 +27,7 @@ function fillInFilterFormInputs({ column, comparison, value }) {
   userEvent.type(getNumberInputValue(), value);
 }
 function fillInOrderFormInputs(radioInputName, { column }) {
+  userEvent.clear(getRadioBtn(radioInputName));
   userEvent.selectOptions(getSelectInput(/ordenar/i), [column]);
   userEvent.click(getRadioBtn(radioInputName));
 }
@@ -47,13 +49,17 @@ describe('Testing the Star Wars Planets Search page', () => {
 
   describe('Testing the searching bar', () => {
     it('should show only the planets that match the word typed in search bar', () => {
-      const searchInput = screen.getByRole('textbox', { name: /search planets/i });
-      userEvent.type(searchInput, planetOne);
+      userEvent.type(getSearchInput(), planetOne);
       expect(getTableCell(/endor/i)).toBeInTheDocument();
       planetsName.forEach((name) => {
         if (name === planetOne) return;
         expect(queryTableCell(name)).not.toBeInTheDocument();
       })
+    });
+
+    it('shouldn\'t display any planets on the screen if type a no correponding planet name', () => {
+      userEvent.type(getSearchInput(), 'inexistent planet');
+      expect(screen.getByText('No Planets to Display')).toBeInTheDocument();
     });
   });
 
