@@ -16,7 +16,6 @@ const queryButtons = (name) => screen.queryAllByRole('button', { name: name });
 const getNumberInputValue = () => screen.getByRole('spinbutton', { name: "Value" });
 const getSelectInput = (name) => screen.getByRole('combobox', { name: name });
 const querySelectInput = (name) => screen.queryByRole('combobox', { name: name });
-const getSelectedOption = (value) => screen.getByRole('option', { name: value }).selected;
 const getRadioBtn = (name) => screen.getByRole('radio', { name: name });
 const getSearchInput = () => screen.getByRole('textbox', { name: /search planets/i });
 
