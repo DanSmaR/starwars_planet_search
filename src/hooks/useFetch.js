@@ -15,7 +15,7 @@ function useFetch(url) {
       })
       .catch((err) => {
         console.log('Error', err.message);
-        setError(err);
+        setError(err.message);
       })
       .finally(() => setLoading(false));
   }, [url]);

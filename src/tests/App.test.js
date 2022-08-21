@@ -152,3 +152,22 @@ describe('Testing the Star Wars Planets Search page', () => {
     });
   });
 });
+
+describe('testing the API response', () => {
+  describe('testing the failed response', () => {
+    beforeEach(async() => {
+      jest.spyOn(global, "fetch").mockImplementation(() =>
+        Promise.reject(new Error('API is down'))
+      );
+      render(<App />)
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+    });
+
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+    it('should show the error message in tha page', () => {
+      expect(screen.getByText('API is down')).toBeInTheDocument();
+    });
+  });
+});
