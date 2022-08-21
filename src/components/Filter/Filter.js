@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 import { columnsFilter, comparisonOperators } from '../../utils/constants';
 
